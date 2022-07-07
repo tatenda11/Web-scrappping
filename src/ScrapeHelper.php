@@ -11,6 +11,7 @@ class ScrapeHelper
     {
         $client = new Client();
         $response = $client->get($url);
+        //file_put_contents( 'page.html', $response->getBody()->getContents());
         return new Crawler($response->getBody()->getContents(), $url);
     }
 }
