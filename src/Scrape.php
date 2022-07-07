@@ -9,14 +9,9 @@ class Scrape
 
     public function run(): void
     {
-        $product = new Product();
-        $payload = [];
+        $product = new Product(new DataFormatHelper());
         $document = ScrapeHelper::fetchDocument('https://www.magpiehq.com/developer-challenge/smartphones');
-
-       // $nodeValues = $document->filter('#products > div');
-        //$nodeValues = $document->filter('div#products > div > div.product');
         $productList = $document->filter('div#products > div > div.product');
-    
 
         foreach ($document->filter('div#products > div > div.product') as $items) 
         {
@@ -42,7 +37,6 @@ class Scrape
                 if( $index == 2 )
                 {
                     $product->setAvailabilityText( $child->text(''));
-                    //print_r( $product->getProduct() );
                 }
 
                 if( $index == 3)
@@ -51,11 +45,12 @@ class Scrape
                 }
             });
             
-            $payload[] = $product->getProduct();
+            $this->products[] = $product->getProduct();
         }
 
-       print_r( $payload );
-        file_put_contents('output.json', json_encode($payload));
+        print_r(  $this->products );
+
+        file_put_contents('output.json', json_encode($this->products));
     }
 }
 
