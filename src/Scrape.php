@@ -31,7 +31,6 @@ class Scrape
 
                 foreach ($document->filter('div#products > div > div.product') as $items) 
                 {
-                    echo  "item found" ."\n";
                     $node = new Crawler($items); 
                     $product->setTitle( $node->filter( 'span.product-name' )->text( '' )  );
                     $product->setCapacityMb($node->filter('span.product-capacity')->text('') );
@@ -41,8 +40,11 @@ class Scrape
                     $node->filter('div > div.bg-white > div')->each(function (Crawler $child, $index ) use ( &$product ) {
                         //fetch color
                         if( $index == 0)
-                        {
-                            $product->setColor($child->filter('div > span')->attr('data-colour'));
+                        {   $colors = [];
+                            $child->filter('div > span')->each(function (Crawler $colorChild, $index ) use ( &$colors  ){
+                                $colors[] = $colorChild->attr('data-colour');
+                            });
+                            $product->setColor( $colors );
                         }
         
                         if( $index == 1)
@@ -61,7 +63,7 @@ class Scrape
                         }
                     });
                     
-                    $this->products[] = $product->getProduct();
+                    $this->products = $product->addToProductList($this->products);
                 }
             }
        }
