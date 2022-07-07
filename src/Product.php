@@ -26,12 +26,12 @@ class Product
 
     public function setImageUrl( $imageUrl )
     {
-        $this->ImageUrl = $imageUrl;
+        $this->imageUrl = $imageUrl;
     }
 
     public function setCapacityMb( $capacityMb )
     {
-        $this->CapacityMb = $capacityMb;
+        $this->capacityMb = $capacityMb;
     }
 
     public function setColor( $color )
@@ -41,7 +41,7 @@ class Product
 
     public function setAvailabilityText( $availabilityText )
     {
-        $this->setAvailabilityText = $availabilityText;
+        $this->availabilityText = $availabilityText;
     }
 
     public function setIsAvailable( $isAvailable )
@@ -51,12 +51,12 @@ class Product
 
     public function setShippingText( $shippingText )
     {
-        $this->setShippingText = $shippingText;
+        $this->shippingText = $shippingText;
     }
 
     public function setShippingDate( $shippingDate )
     {
-        $this->setShippingDate = $shippingDate;
+        $this->shippingDate = $shippingDate;
     }
 
     public function getProduct()

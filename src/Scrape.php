@@ -15,17 +15,46 @@ class Scrape
 
        // $nodeValues = $document->filter('#products > div');
         //$nodeValues = $document->filter('div#products > div > div.product');
-        $document->filter('div#products > div > div.product')->each( function( Crawler $node, $i ) use (&$product, &$payload) {
+        $productList = $document->filter('div#products > div > div.product');
+    
+
+        foreach ($document->filter('div#products > div > div.product') as $items) 
+        {
+            $node = new Crawler($items); 
             $product->setTitle( $node->filter( 'span.product-name' )->text( '' )  );
             $product->setPrice( $node->filter( 'span.product-name' )->text( '' ) );
             $product->setCapacityMb($node->filter('span.product-capacity')->text('') );
-            $product->setCapacityMb($node->filter('span.product-capacity')->text('') );
-            $product->setImageUrl( $node->filter('img')->eq(0)->attr('src'));
-            $payload[] = $product->getProduct();
-        });
+            $product->setCapacityMb($node->filter('span.product-capacity')->text(''));
+            $product->setImageUrl( $node->filter('img')->attr('src') );
+           
+            $node->filter('div > div.bg-white > div')->each(function (Crawler $child, $index ) use ( &$product ) {
+                //fetch color
+                if( $index == 0)
+                {
+                    $product->setColor($child->filter('div > span')->attr('data-colour'));
+                }
 
-        //file_put_contents('output.json', json_encode($this->products));
-        print_r($payload);
+                if( $index == 1)
+                {  
+                    $product->setPrice($child->text(''));
+                }
+
+                if( $index == 2 )
+                {
+                    $product->setAvailabilityText( $child->text(''));
+                    //print_r( $product->getProduct() );
+                }
+
+                if( $index == 3)
+                {
+                    $product->setShippingText( $child->text(''));
+                }
+            });
+            
+            $payload[] = $product->getProduct();
+        }
+
+       print_r( $payload );
         file_put_contents('output.json', json_encode($payload));
     }
 }
