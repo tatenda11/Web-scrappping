@@ -13,7 +13,14 @@ class Product
     protected $isAvailable;
     protected $shippingText;
     protected $shippingDate;
-    
+    private $dataHelper;
+
+
+    public function __construct($dataHelper )
+    {
+        $this->dataHelper = $dataHelper;
+    }
+
     public function setTitle( $title )
     {
         $this->title = $title;
@@ -62,15 +69,15 @@ class Product
     public function getProduct()
     {
         return [
-            'title' => $this->title,
+            'title' => $this->dataHelper->formatTitle($this->title,$this->capacityMb  ),
             'price' => $this->price,
-            'imageUrl' => $this->imageUrl,
-            'capacityMB' => $this->capacityMb,
+            'imageUrl' =>  $this->dataHelper->formatImageUrl($this->imageUrl),
+            'capacityMB' => $this->dataHelper->formatCapacityMb($this->capacityMb),
             'colour' => $this->color,
-            'availabilityText' => $this->availabilityText,
-            'isAvailable' => $this->isAvailable,
+            'availabilityText' =>  $this->dataHelper->formatAvailabilityText($this->availabilityText),
+            'isAvailable' => $this->dataHelper->formatAvailabilityState($this->availabilityText),
             'shippingText' => $this->shippingText,
-            'shippingDate' => $this->shippingDate
+            'shippingDate' => $this->dataHelper->formatShippingDate($this->shippingDate)
         ];
     }
 }

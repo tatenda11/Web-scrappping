@@ -17,21 +17,37 @@ class DataFormatHelper
 
     public function formatCapacityMb( $capacityText)
     {
-        return $capacityText;
+        if ( strpos( strtolower($capacityText), 'mb') !== false) {
+            return floatval(preg_replace("/[^-0-9\.]/","",$capacityText));
+        }
+
+        return floatval(preg_replace("/[^-0-9\.]/","",$capacityText )) * 1000 ;
     }
 
     public function formatAvailabilityState( $availabilityText)
     {
-        return $availabilityText;
+        if ( strpos( strtolower($availabilityText), 'in stock') !== false){
+            return 'true';
+        }
+        return 'false';
     }
 
     public function formatShippingDate( $shippingDateText )
     {
-        return  $shippingDateText;
+        return $shippingDateText;
+       // $date = \DateTime::createFromFormat('l, j F Y \at G:i',$shippingDateText);
+       // return $date->format('j F Y'); //"prints" 8 January 2014
     }
 
     public function formatAvailabilityText(  $availabilityText)
     {
-        return $availabilityText;
+        $segments = explode(':', $availabilityText);
+        return $segments[1] ;
+    }
+
+    public function formatImageUrl(  $imageUrl , $domain = 'https://www.magpiehq.com/developer-challenge')
+    {
+        $imageUrl = str_replace( '../', '', $imageUrl);
+        return  $domain . '/' . $imageUrl;
     }
 }
