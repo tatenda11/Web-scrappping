@@ -40,7 +40,8 @@ class Scrape
                     $node->filter('div > div.bg-white > div')->each(function (Crawler $child, $index ) use ( &$product ) {
                         //fetch color
                         if( $index == 0)
-                        {   $colors = [];
+                        {   
+                            $colors = [];
                             $child->filter('div > span')->each(function (Crawler $colorChild, $index ) use ( &$colors  ){
                                 $colors[] = $colorChild->attr('data-colour');
                             });
@@ -67,9 +68,6 @@ class Scrape
                 }
             }
        }
-    
-       print_r(  $this->products );
-
         file_put_contents('output.json', json_encode($this->products));
     }
 }

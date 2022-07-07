@@ -1,34 +1,3 @@
-## Magpie PHP Developer Challenge
-
-Your task is to gather data about the products listed on https://www.magpiehq.com/developer-challenge/smartphones
-
-The final output of your script should be an array of objects similar to the example below:
-
-```
-{
-    "title": "iPhone 11 Pro 64GB",
-    "price": 123.45,
-    "imageUrl": "https://example.com/image.png",
-    "capacityMB": 64000,
-    "colour": "red",
-    "availabilityText": "In Stock",
-    "isAvailable": true,
-    "shippingText": "Delivered from 25th March",
-    "shippingDate": "2021-03-25"
-}
-
-```
-
-You should use this repository as a starter template.
-
-You can refer to the [Symfony DomCrawler](https://symfony.com/doc/current/components/dom_crawler.html) documentation for a nice way to capture the data you need.
-
-Hint: the `Symfony\Component\DomCrawler\Crawler` class,  and its `filter()` method, are your friends.
-
-You can share your code with us by email, or through a service like GitHub.
-
-Please also send us your `output.json`.
-
 ### Notes
 * Please de-dupe your data. We don’t want to see the same product twice, even if it’s listed twice on the website.
 * Make sure that all product variants are captured. Each colour variant should be treated as a separate product.
