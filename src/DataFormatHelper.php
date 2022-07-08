@@ -54,7 +54,6 @@ class DataFormatHelper
                 $tokens = Array();
             }
         }
-        print_r($tokens);
         
         $result[] = $this->parse_date_tokens($tokens);
         return array_filter($result);
