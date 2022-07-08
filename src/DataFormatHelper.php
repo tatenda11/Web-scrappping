@@ -15,6 +15,11 @@ class DataFormatHelper
         return $dateText;
     }
 
+    public function formatPrice( $priceText)
+    {
+        return preg_replace("/[^-0-9\.]/","",$priceText);
+    }
+
     public function formatCapacityMb( $capacityText)
     {
         if ( strpos( strtolower($capacityText), 'mb') !== false) {

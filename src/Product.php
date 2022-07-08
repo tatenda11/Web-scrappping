@@ -100,14 +100,14 @@ class Product
 
             $currentProducts[] = [
                 'title' => $this->dataHelper->formatTitle($this->title,$this->capacityMb  ),
-                'price' => $this->price,
+                'price' => $this->dataHelper->formatPrice($this->price),
                 'imageUrl' =>  $this->dataHelper->formatImageUrl($this->imageUrl),
                 'capacityMB' => $this->dataHelper->formatCapacityMb($this->capacityMb),
                 'colour' => $color,
                 'availabilityText' =>  $this->dataHelper->formatAvailabilityText($this->availabilityText),
                 'isAvailable' => $this->dataHelper->formatAvailabilityState($this->availabilityText),
                 'shippingText' => $this->shippingText,
-                'shippingDate' => $this->dataHelper->formatShippingDate($this->shippingDate)
+                'shippingDate' => $this->dataHelper->formatShippingDate($this->shippingText )
             ];
 
             $this->setProductIndex( $color );
