@@ -13,6 +13,7 @@ class Product
     protected $isAvailable;
     protected $shippingText;
     protected $shippingDate;
+    protected $productIndex = [];
     private $dataHelper;
 
 
@@ -43,6 +44,11 @@ class Product
     public function setPrice( $price )
     {
         $this->price = $price;
+    }
+
+    public function setProductIndex( $color )
+    {
+        $this->productIndex[] = $color . $this->title  . $this->capacityMb;
     }
 
     public function setImageUrl( $imageUrl )
@@ -82,38 +88,31 @@ class Product
 
     public function addToProductList($currentProducts)
     {
-        if( !empty($this->colors)){
-            foreach( $this->colors as $color)
+        
+        foreach( $this->colors as $color)
+        {
+            $index = $color . $this->title  . $this->capacityMb;
+                
+            if(in_array( $index, $this->productIndex ))
             {
-                $currentProducts[] = [
-                    'title' => $this->dataHelper->formatTitle($this->title,$this->capacityMb  ),
-                    'price' => $this->price,
-                    'imageUrl' =>  $this->dataHelper->formatImageUrl($this->imageUrl),
-                    'capacityMB' => $this->dataHelper->formatCapacityMb($this->capacityMb),
-                    'colour' => $color,
-                    'availabilityText' =>  $this->dataHelper->formatAvailabilityText($this->availabilityText),
-                    'isAvailable' => $this->dataHelper->formatAvailabilityState($this->availabilityText),
-                    'shippingText' => $this->shippingText,
-                    'shippingDate' => $this->dataHelper->formatShippingDate($this->shippingDate)
-                ];
+               continue;
             }
 
-            $this->clearProduct();
-            return $currentProducts;
+            $currentProducts[] = [
+                'title' => $this->dataHelper->formatTitle($this->title,$this->capacityMb  ),
+                'price' => $this->price,
+                'imageUrl' =>  $this->dataHelper->formatImageUrl($this->imageUrl),
+                'capacityMB' => $this->dataHelper->formatCapacityMb($this->capacityMb),
+                'colour' => $color,
+                'availabilityText' =>  $this->dataHelper->formatAvailabilityText($this->availabilityText),
+                'isAvailable' => $this->dataHelper->formatAvailabilityState($this->availabilityText),
+                'shippingText' => $this->shippingText,
+                'shippingDate' => $this->dataHelper->formatShippingDate($this->shippingDate)
+            ];
+
+            $this->setProductIndex( $color );
         }
-
-        $currentProducts[] = [
-            'title' => $this->dataHelper->formatTitle($this->title,$this->capacityMb  ),
-            'price' => $this->price,
-            'imageUrl' =>  $this->dataHelper->formatImageUrl($this->imageUrl),
-            'capacityMB' => $this->dataHelper->formatCapacityMb($this->capacityMb),
-            'colour' => "",
-            'availabilityText' =>  $this->dataHelper->formatAvailabilityText($this->availabilityText),
-            'isAvailable' => $this->dataHelper->formatAvailabilityState($this->availabilityText),
-            'shippingText' => $this->shippingText,
-            'shippingDate' => $this->dataHelper->formatShippingDate($this->shippingDate)
-        ];
-
+        
         $this->clearProduct();
         return $currentProducts;
     }
