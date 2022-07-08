@@ -69,8 +69,8 @@ class Scrape
                 }
             }
        }
-       echo count( $this->products);
-        file_put_contents('output.json', json_encode($this->products));
+       //print_r($this->products);
+       file_put_contents('output.json', json_encode($this->products));
     }
 }
 
